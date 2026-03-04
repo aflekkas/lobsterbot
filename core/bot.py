@@ -218,6 +218,11 @@ def main():
 
     async def post_init(application):
         application.create_task(_heartbeat(_project_dir))
+        for user_id in _config["telegram"]["allowed_users"]:
+            try:
+                await application.bot.send_message(user_id, "i'm back online 🦞")
+            except Exception:
+                logger.warning("Could not send startup message to %s", user_id)
     app.post_init = post_init
 
     app.add_handler(CommandHandler("new", handle_new))
