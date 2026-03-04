@@ -61,7 +61,3 @@ Create `/root/lobster-bot/.env` with your token and user ID. That's it.
 ---
 
 If this is useful to you, a ⭐ on the repo goes a long way.
-
-## License
-
-MIT
