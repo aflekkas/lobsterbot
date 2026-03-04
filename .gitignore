@@ -8,14 +8,20 @@ build/
 .venv/
 venv/
 
-# Project
+# Runtime data — created when bot runs
 user/
 *.db
+*.lock
+.claude_lock
 
-# Memory — ignore contents but keep structure
+# Memory — keep structure, ignore runtime content
 memory/daily/*.md
 memory/chats/*.md
 !memory/facts.md
+
+# Temp files from media processing
+/tmp/
+lobsterbot_*/
 
 # OS
 .DS_Store

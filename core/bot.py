@@ -1,4 +1,5 @@
 import logging
+import shutil
 from pathlib import Path
 
 from telegram import Update
@@ -243,11 +244,37 @@ async def handle_help(update: Update, context) -> None:
     )
 
 
-def main():
+def _setup_data_dir(source_dir: Path, data_dir: Path) -> None:
+    """Copy Claude config files into a separate data directory."""
+    data_dir.mkdir(parents=True, exist_ok=True)
+
+    # Copy Claude config files (these define the bot's personality and permissions)
+    for item in ["CLAUDE.md", ".claude", ".mcp.json"]:
+        src = source_dir / item
+        dst = data_dir / item
+        if src.exists() and not dst.exists():
+            if src.is_dir():
+                shutil.copytree(src, dst)
+            else:
+                shutil.copy2(src, dst)
+
+    logger.info("Data directory: %s", data_dir)
+
+
+def main(data_dir: str | None = None):
     global _config, _sessions, _project_dir, _router
 
-    _project_dir = str(Path(__file__).resolve().parent.parent)
+    source_dir = Path(__file__).resolve().parent.parent
     _config = load_config()
+
+    # If data_dir is set, Claude Code works in a separate directory
+    # so it doesn't modify the source repo
+    if data_dir:
+        _project_dir = str(Path(data_dir).resolve())
+        _setup_data_dir(source_dir, Path(_project_dir))
+    else:
+        _project_dir = str(source_dir)
+
     _sessions = SessionManager(Path(_project_dir) / "sessions.db")
 
     lock = ProcessLock(Path(_project_dir) / ".claude_lock")
