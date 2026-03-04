@@ -1,8 +1,8 @@
 # 🦞 lobster-bot
 
-Your personal AI assistant on Telegram, powered by Claude Code.
+Your self-hosted AI assistant on Telegram. Powered by Claude Code.
 
-Clone it, set two env vars, and you've got a 24/7 assistant that can browse the web, remember things about you, and hold real conversations — all from your phone.
+It browses the web, remembers your conversations, and runs 24/7 on your own server. Two env vars and you're live.
 
 ## Quick Start
 
@@ -12,128 +12,51 @@ cd lobster-bot
 pip install -r requirements.txt
 ```
 
-Create a `.env` file:
+Create a `.env`:
 
-```bash
-TELEGRAM_TOKEN=your-bot-token-here
-TELEGRAM_USER_IDS=your-user-id-here
+```
+TELEGRAM_TOKEN=your-token-from-botfather
+TELEGRAM_USER_IDS=your-telegram-user-id
 ```
 
 Run:
 
 ```bash
-set -a && source .env && set +a
-python run.py
+source .env && python run.py
 ```
 
-## Getting a Telegram Bot Token
+## Setup
 
-1. Message [@BotFather](https://t.me/BotFather) on Telegram
-2. Send `/newbot` and follow the prompts
-3. Copy the token into your `.env`
+1. Get a bot token — message [@BotFather](https://t.me/BotFather) on Telegram, send `/newbot`
+2. Get your user ID — message [@userinfobot](https://t.me/userinfobot)
+3. Put both in `.env` and run
 
-## Finding Your Telegram User ID
+## What It Can Do
 
-Message [@userinfobot](https://t.me/userinfobot) on Telegram — it will reply with your user ID.
+- **Web browsing** — navigates real websites via Playwright, not just search snippets
+- **Persistent memory** — remembers facts about you and keeps daily logs
+- **Conversations that stick** — sessions persist, so context carries across messages
+- **Usage tracking** — know exactly what you're spending with `/usage`
+- **Auto-updates** — pulls from git every 5 minutes, push a change and it goes live
 
-## Requirements
-
-- Python 3.11+
-- Claude Code CLI (`claude`) installed and authenticated
-- Node.js (for Playwright MCP — web browsing)
-- A Telegram bot token
-
-## Deploy on Hostinger VPS
-
-SSH into your VPS:
-
-```bash
-ssh root@your-server-ip
-```
-
-Install prerequisites:
-
-```bash
-apt update && apt install -y python3 python3-pip git
-# Install Claude Code CLI: https://docs.anthropic.com/en/docs/claude-code
-```
-
-Clone and set up:
+## Deploy (VPS)
 
 ```bash
 git clone https://github.com/aflekkas/lobster-bot.git ~/lobster-bot
 cd ~/lobster-bot
 pip install -r requirements.txt
-```
-
-Create your `.env`:
-
-```bash
-cat > ~/lobster-bot/.env << 'EOF'
-TELEGRAM_TOKEN=your-bot-token-here
-TELEGRAM_USER_IDS=your-user-id-here
-EOF
-```
-
-Install the systemd service:
-
-```bash
 cp deploy/systemd/lobster-bot.service /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable --now lobster-bot
 ```
 
-Check it's running:
+Create `/root/lobster-bot/.env` with your token and user ID. That's it.
 
-```bash
-systemctl status lobster-bot
-journalctl -u lobster-bot -f
-```
+## Requirements
 
-Update to latest:
-
-```bash
-cd ~/lobster-bot && git pull && systemctl restart lobster-bot
-```
-
-## Commands
-
-- `/new` — Start a new conversation
-- `/usage` — Cost and token stats
-- `/status` — Session info
-- `/help` — Available commands
-
-## How It Works
-
-```
-You on Telegram → python-telegram-bot → Claude Code (claude -p) → back to you
-```
-
-It's a thin bridge between Telegram and Claude Code. Your messages go in, Claude thinks, and the response comes back. That's it.
-
-- **Sessions persist** — Claude remembers your conversation context
-- **Web browsing built in** — Playwright MCP lets it navigate real websites
-- **Usage tracking** — know exactly what you're spending
-- **Auto-updates** — pulls from git every 5 minutes so you can push changes and they go live
-
-## Project Structure
-
-```
-lobster-bot/
-├── core/
-│   ├── bot.py         # Telegram handlers
-│   ├── bridge.py      # Claude Code subprocess wrapper
-│   ├── session.py     # SQLite session + usage tracking
-│   └── config.py      # Env var config loader
-├── .claude/
-│   └── settings.json  # Permission boundary
-├── deploy/
-│   └── systemd/       # Service file
-├── memory/            # Bot's memory (created at runtime)
-├── CLAUDE.md          # Bot personality + instructions
-├── run.py             # Entry point
-└── .env               # Your secrets (gitignored)
-```
+- Python 3.11+
+- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed and authenticated
+- Node.js (for web browsing)
 
 ## License
 

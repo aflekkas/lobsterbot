@@ -1,0 +1,12 @@
+telegram:
+  token: "8722081449:AAFI1VYKwim8jysVgzuF9PTgyh5PYHgGveQ"
+  allowed_users:
+    - 8574346253
+
+# Optional: scheduled tasks
+# scheduler:
+#   tasks:
+#     - name: morning_brief
+#       cron: "0 8 * * *"
+#       prompt: "Good morning! Give me a brief overview of today."
+#       chat_id: 8574346253
