@@ -8,27 +8,8 @@
       "WebFetch(*)",
       "Write",
       "Edit",
-      "Bash(date*)",
-      "Bash(python3*)",
-      "Bash(curl*)",
-      "Bash(ls*)",
-      "Bash(cat*)",
-      "Bash(head*)",
-      "Bash(tail*)",
-      "Bash(wc*)",
-      "Bash(echo*)",
-      "Bash(npx*)",
-      "Bash(rm*)",
-      "Bash(mkdir*)",
-      "Bash(mv*)",
-      "Bash(cp*)"
+      "Bash(*)"
     ],
-    "deny": [
-      "Bash(sudo*)",
-      "Bash(systemctl*)",
-      "Bash(chmod*)",
-      "Bash(chown*)",
-      "Read(./.env)"
-    ]
+    "deny": []
   }
 }
