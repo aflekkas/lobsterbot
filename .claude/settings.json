@@ -17,8 +17,7 @@
       "Bash(tail*)",
       "Bash(wc*)",
       "Bash(echo*)",
-      "Bash(npx*)",
-      "mcp__playwright__*"
+      "Bash(npx*)"
     ],
     "deny": [
       "Write(./core/**)",

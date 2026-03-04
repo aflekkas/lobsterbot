@@ -2,7 +2,7 @@
 
 Your self-hosted AI assistant on Telegram. Powered by Claude Code.
 
-It browses the web, remembers your conversations, and runs 24/7 on your own server.
+It searches the web, remembers your conversations, and runs 24/7 on your own server.
 
 ## Get Started
 
@@ -24,7 +24,7 @@ Run:
 python run.py
 ```
 
-That's it. The run script installs dependencies, sets up Playwright, loads your `.env`, and starts the bot.
+The run script handles dependencies and loads your `.env` automatically.
 
 ## Setup
 
@@ -34,7 +34,7 @@ That's it. The run script installs dependencies, sets up Playwright, loads your 
 
 ## What It Can Do
 
-- **Web browsing** — navigates real websites via Playwright, not just search snippets
+- **Web search** — finds and summarizes info from the web
 - **Persistent memory** — remembers facts about you and keeps daily logs
 - **Conversations that stick** — sessions persist, so context carries across messages
 - **Usage tracking** — know exactly what you're spending with `/usage`
@@ -42,24 +42,22 @@ That's it. The run script installs dependencies, sets up Playwright, loads your 
 
 ## Deploy on a VPS
 
-SSH in, then:
+One command:
 
 ```bash
-git clone https://github.com/aflekkas/lobster-bot.git ~/lobster-bot
-cd ~/lobster-bot
-# create your .env with TELEGRAM_TOKEN and TELEGRAM_USER_IDS
-cp deploy/systemd/lobster-bot.service /etc/systemd/system/
-systemctl daemon-reload
+curl -sSL https://raw.githubusercontent.com/aflekkas/lobster-bot/main/deploy/install.sh | bash
+```
+
+Then authenticate Claude Code (`claude`), edit your `.env`, and enable the service:
+
+```bash
 systemctl enable --now lobster-bot
 ```
 
 ## Requirements
 
 - Python 3.11+
-- Node.js
-- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) — `npm i -g @anthropic-ai/claude-code`
-
-`run.py` handles installing everything else automatically.
+- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code)
 
 ---
 
