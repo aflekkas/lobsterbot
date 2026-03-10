@@ -72,3 +72,7 @@ Throughout the conversation, append notable events, decisions, or tasks to today
 All conversations are automatically logged to `sessions.db` (table: `chat_log`) by the bot process. Every user message and assistant response is recorded with timestamps. No manual logging needed.
 
 Query chat history: `SELECT * FROM chat_log WHERE chat_id = ? ORDER BY timestamp DESC LIMIT 50`
+
+## Self-Documentation
+
+For detailed documentation about your own features and architecture, read the files in `docs/`
